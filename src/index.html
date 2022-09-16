@@ -17,7 +17,38 @@
     <script nomodule src="/build/scm-calendar.js"></script>
   </head>
   <body>
-    <my-component />
+    <my-component>
+      <div slot="event" date='2022-09-15T00:00:00'"">
+        THIS IS FIRST EVENT
+      </div>
+      <div slot="event" date='2022-09-15T00:00:00'>
+        THIS IS SECOND EVENT
+      </div>
+      <div slot="event" date='2022-09-15T00:00:00'>
+        THIS IS THIRD EVENT
+      </div>
+     
+      <div slot="event-123" id="123">
+        <div>
+          <h2>
+            Event 1233434
+          </h2>
+        </div>
+      </div>
+      <div slot="event-456" id="456">
+        <div>
+          <h2>
+            Event 1233434
+          </h2>
+        </div>
+      </div>
+      <div slot="event-987" id="987">
+        <div>
+          <h2>
+            Event 1233434
+          </h2>
+        </div>
+      </div>
+    </my-component>
   </body>
-  
 </html>
