@@ -7,6 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MyComponent {
+        "addEvent": (event: any) => Promise<void>;
+        "events": any[];
+    }
+    interface RootComponent {
     }
 }
 declare global {
@@ -16,15 +20,26 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLRootComponentElement extends Components.RootComponent, HTMLStencilElement {
+    }
+    var HTMLRootComponentElement: {
+        prototype: HTMLRootComponentElement;
+        new (): HTMLRootComponentElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
+        "root-component": HTMLRootComponentElement;
     }
 }
 declare namespace LocalJSX {
     interface MyComponent {
+        "events"?: any[];
+    }
+    interface RootComponent {
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
+        "root-component": RootComponent;
     }
 }
 export { LocalJSX as JSX };
@@ -32,6 +47,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "root-component": LocalJSX.RootComponent & JSXBase.HTMLAttributes<HTMLRootComponentElement>;
         }
     }
 }
