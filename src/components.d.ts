@@ -12,6 +12,10 @@ export namespace Components {
     }
     interface RootComponent {
     }
+    interface ScmContentChip {
+        "dateTime": string;
+        "type": string;
+    }
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -26,9 +30,16 @@ declare global {
         prototype: HTMLRootComponentElement;
         new (): HTMLRootComponentElement;
     };
+    interface HTMLScmContentChipElement extends Components.ScmContentChip, HTMLStencilElement {
+    }
+    var HTMLScmContentChipElement: {
+        prototype: HTMLScmContentChipElement;
+        new (): HTMLScmContentChipElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
         "root-component": HTMLRootComponentElement;
+        "scm-content-chip": HTMLScmContentChipElement;
     }
 }
 declare namespace LocalJSX {
@@ -37,9 +48,14 @@ declare namespace LocalJSX {
     }
     interface RootComponent {
     }
+    interface ScmContentChip {
+        "dateTime"?: string;
+        "type"?: string;
+    }
     interface IntrinsicElements {
         "my-component": MyComponent;
         "root-component": RootComponent;
+        "scm-content-chip": ScmContentChip;
     }
 }
 export { LocalJSX as JSX };
@@ -48,6 +64,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "root-component": LocalJSX.RootComponent & JSXBase.HTMLAttributes<HTMLRootComponentElement>;
+            "scm-content-chip": LocalJSX.ScmContentChip & JSXBase.HTMLAttributes<HTMLScmContentChipElement>;
         }
     }
 }

@@ -6,6 +6,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import dayjs from 'dayjs';
 
 // document.addEventListener('DOMContentLoaded', function () {
 // var calendarEl = document.getElementById('calendar');
@@ -58,14 +59,29 @@ export class MyComponent {
     }
 
     // TODO: find all the chips which are present inside the wrapper component
-    console.log({ nodes });
+    console.log({ nodes, events: this.events });
     // TODO: Once we find the chips, then
 
     this.calendar = new Calendar(this.calendarContainerEl as HTMLDivElement, {
       initialView: 'dayGridMonth',
       initialDate: '2022-08-12',
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+      dayCellContent: args => {
+        // console.log({ args });
+        const dt = dayjs(args.date).format('YYYY-MM-DD');
+        // const date = `${args.date.getFullYear()}-${args.date.getMonth()}-${args.date.getDate()}`;
+        // console.log({ dt });
+        return {
+          html: `<div><b>${args.dayNumberText}</b><slot name="chip-${dt}"/></div>
+          `,
+        };
+      },
       events: this.events,
+      eventContent: args => {
+        return {
+          html: `<span/>`,
+        };
+      },
       // events: [
       //   {
       //     title: 'All Day Event',
@@ -73,12 +89,12 @@ export class MyComponent {
       //     id: '123',
       //   },
       // ],
-      eventContent: args => {
-        console.log({ args });
-        return {
-          html: `<slot name="chip-${args.event._def.publicId}"/>`,
-        };
-      },
+      // eventContent: args => {
+      //   console.log({ args });
+      //   return {
+      //     html: `<slot name="chip-${args.event._def.publicId}"/>`,
+      //   };
+      // },
 
       // eventColor: '#f00',
       // events: [

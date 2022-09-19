@@ -10,12 +10,12 @@ export class RootComponent {
   // events can be added or removed in this component
   @State() events: any[] = [
     {
-      title: 'first',
+      title: 'sdfdfdfdfd',
       id: 'first-id',
-      start: '2022-08-01',
+      start: '2022-09-15',
     },
-    { title: 'second', id: 'second-id', start: '2022-08-15' },
-    { title: 'third', id: 'third-id', start: '2022-08-12' },
+    // { title: 'second', id: 'second-id', start: '2022-08-15' },
+    // { title: 'third', id: 'third-id', start: '2022-08-12' },
   ];
 
   addEvent(event) {
@@ -24,16 +24,22 @@ export class RootComponent {
 
   render() {
     console.log({ events: this.events });
+
     return (
       <Host>
         <my-component events={this.events}>
-          {this.events.map((event: any) => {
+          <scm-content-chip type="chip" date-time="2022-09-15T00:00:00">
+            <b>-A-</b>
+          </scm-content-chip>
+          {/* {this.events.map((event: any) => {
             return (
-              <span slot={`chip-${event.id}`}>
+              <span slot={`chip-${new Date().toISO.formatItAsPerNeed}`}>
                 <b>-{event.title.slice(0, 1).toUpperCase()}-</b>
               </span>
             );
-          })}
+          })} */}
+          {/* chip- */}
+          {/* slot: chip-2022-09-15 */}
         </my-component>
         {/* <span>HEY FROM ROOT COMPONENRt</span>
         {this.events.map(i => (

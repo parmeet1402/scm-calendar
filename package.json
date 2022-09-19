@@ -30,7 +30,8 @@
     "@fullcalendar/daygrid": "^5.11.3",
     "@fullcalendar/list": "^5.11.3",
     "@fullcalendar/timegrid": "^5.11.3",
-    "@stencil/core": "^2.13.0"
+    "@stencil/core": "^2.13.0",
+    "dayjs": "^1.11.5"
   },
   "devDependencies": {
     "@stencil/sass": "^2.0.0",
