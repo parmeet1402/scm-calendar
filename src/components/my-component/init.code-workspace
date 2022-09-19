@@ -1,0 +1,14 @@
+{
+  "folders": [
+	{
+		"path": "../../../../test/init"
+	},
+	{
+		"path": "../../../../test/stencil-talk"
+	},
+	{
+		"path": "../../.."
+	}
+],
+  "settings": {}
+}
