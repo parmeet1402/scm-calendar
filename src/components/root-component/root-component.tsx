@@ -18,11 +18,9 @@ export class RootComponent {
   ];
 
   componentDidLoad() {
-    console.log({ calendarWrapper: this.calendarWrapperEl });
     this.calendarWrapperEl.init(this.events, args => {
-      console.log({ args });
       return {
-        html: `<b><i>${args.event._def.title.slice(0, 1)}</i></b>`,
+        html: `<b>${args.event._def.title.slice(0, 2)}</b>`,
       };
     });
   }
@@ -40,6 +38,13 @@ export class RootComponent {
     return (
       <Host>
         <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />
+        
+        
+        
+        
+        
+        
+        
         <form
           onSubmit={e => {
             e.preventDefault();

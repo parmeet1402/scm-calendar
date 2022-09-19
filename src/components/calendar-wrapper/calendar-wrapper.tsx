@@ -15,7 +15,6 @@ export class CalendarWrapper {
   calendarContainerEl!: HTMLDivElement;
   eventContent = null;
   calendar = null;
-  // @State() events: Identity<EventSourceInput>[] = [];
   @State() events: Events = [];
 
   componentDidLoad() {
@@ -24,42 +23,37 @@ export class CalendarWrapper {
       initialDate: '2022-09-12',
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
       events: this.events,
-      // eventContent: this.eventContent,
       ...(this.eventContent !== null && { eventContent: args => this.eventContent(args) }),
     });
     this.calendar.render();
-    // calendar.refetchEvents
   }
 
   @Watch('events')
   handleEventsChange() {
     this.calendar.setOption('events', this.events);
+    this.calendar.setOption('eventContent', this.eventContent);
   }
 
-  // TODO: Private Method for populating events
-  // Inputs: eventArray
+  // Private Method for populating events
   populateEvents(events: Events) {
     this.events = events;
   }
 
-  // TODO: Public Method for calling the populating and render method
+  // Public Method for calling the populating and render method
   @Method()
   async init(events: any, cb) {
+    // pass on the callback
     this.eventContent = cb;
-    // console.log({this.eventContent})
     // populate events
     this.events = events;
-    // pass on the callback
   }
 
   @Method()
   async updateEvents(events: any) {
     this.events = events;
-    console.log({ eventContent: this.eventContent });
   }
 
   render() {
-    console.log({ events: this.events, eventContent: this.eventContent });
     return (
       <div
         ref={el => (this.calendarContainerEl = el as HTMLDivElement)}
