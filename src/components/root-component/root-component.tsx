@@ -1,10 +1,11 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'root-component',
   shadow: true,
 })
 export class RootComponent {
+  calendarWrapperEl!: any;
   @State() inputVal: string = '';
 
   // events can be added or removed in this component
@@ -14,44 +15,36 @@ export class RootComponent {
       id: 'first-id',
       start: '2022-09-15',
     },
-    // { title: 'second', id: 'second-id', start: '2022-08-15' },
-    // { title: 'third', id: 'third-id', start: '2022-08-12' },
   ];
+
+  componentDidLoad() {
+    console.log({ calendarWrapper: this.calendarWrapperEl });
+    this.calendarWrapperEl.init(this.events, args => {
+      console.log({ args });
+      return {
+        html: `<b><i>${args.event._def.title.slice(0, 1)}</i></b>`,
+      };
+    });
+  }
+
+  @Watch('events')
+  handleEventsChange() {
+    this.calendarWrapperEl.updateEvents(this.events);
+  }
 
   addEvent(event) {
     this.events = [...this.events, event];
   }
 
   render() {
-    console.log({ events: this.events });
-
     return (
       <Host>
-        <my-component events={this.events}>
-          <scm-content-chip type="chip" date-time="2022-09-15T00:00:00">
-            <b>-A-</b>
-          </scm-content-chip>
-          {/* {this.events.map((event: any) => {
-            return (
-              <span slot={`chip-${new Date().toISO.formatItAsPerNeed}`}>
-                <b>-{event.title.slice(0, 1).toUpperCase()}-</b>
-              </span>
-            );
-          })} */}
-          {/* chip- */}
-          {/* slot: chip-2022-09-15 */}
-        </my-component>
-        {/* <span>HEY FROM ROOT COMPONENRt</span>
-        {this.events.map(i => (
-          <h1>{i}</h1>
-        ))} */}
+        <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />
         <form
           onSubmit={e => {
             e.preventDefault();
-            const event = { title: this.inputVal, id: `${this.inputVal}-id`, start: '2022-08-10' };
-            console.log({ event });
+            const event = { title: this.inputVal, id: `${this.inputVal}-id`, start: '2022-09-10' };
             this.addEvent(event);
-            // this.events = [...this.events, this.inputVal];
             this.inputVal = '';
           }}
         >
@@ -68,43 +61,3 @@ export class RootComponent {
     );
   }
 }
-
-/* 
- <my-component>
-      <!-- <div slot="event" date='2022-09-15T00:00:00'"">
-        THIS IS FIRST EVENT
-      </div>
-      <div slot="event" date='2022-09-15T00:00:00'>
-        THIS IS SECOND EVENT
-      </div>
-      <div slot="event" date='2022-09-15T00:00:00'>
-        THIS IS THIRD EVENT
-      </div>
-      <div slot="event" date='2022-09-15T00:00:00'>
-        THIS IS THIRD EVENT
-      </div> -->
-     
-      <div slot="event-123" id="123">
-        <div>
-          <h2>
-            Event 1233434
-          </h2>
-        </div>
-      </div>
-      <div slot="event-456" id="456">
-        <div>
-          <h2>
-            Event 1233434
-          </h2>
-        </div>
-      </div>
-      <div slot="event-987" id="987">
-        <div>
-          <h2>
-            Event 1233434
-          </h2>
-        </div>
-      </div>
-    </my-component>
-
-*/

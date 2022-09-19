@@ -6,6 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface CalendarWrapper {
+        "init": (events: any, cb: any) => Promise<void>;
+        "updateEvents": (events: any) => Promise<void>;
+    }
     interface MyComponent {
         "addEvent": (event: any) => Promise<void>;
         "events": any[];
@@ -18,6 +22,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLCalendarWrapperElement extends Components.CalendarWrapper, HTMLStencilElement {
+    }
+    var HTMLCalendarWrapperElement: {
+        prototype: HTMLCalendarWrapperElement;
+        new (): HTMLCalendarWrapperElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -37,12 +47,15 @@ declare global {
         new (): HTMLScmContentChipElement;
     };
     interface HTMLElementTagNameMap {
+        "calendar-wrapper": HTMLCalendarWrapperElement;
         "my-component": HTMLMyComponentElement;
         "root-component": HTMLRootComponentElement;
         "scm-content-chip": HTMLScmContentChipElement;
     }
 }
 declare namespace LocalJSX {
+    interface CalendarWrapper {
+    }
     interface MyComponent {
         "events"?: any[];
     }
@@ -53,6 +66,7 @@ declare namespace LocalJSX {
         "type"?: string;
     }
     interface IntrinsicElements {
+        "calendar-wrapper": CalendarWrapper;
         "my-component": MyComponent;
         "root-component": RootComponent;
         "scm-content-chip": ScmContentChip;
@@ -62,6 +76,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "calendar-wrapper": LocalJSX.CalendarWrapper & JSXBase.HTMLAttributes<HTMLCalendarWrapperElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "root-component": LocalJSX.RootComponent & JSXBase.HTMLAttributes<HTMLRootComponentElement>;
             "scm-content-chip": LocalJSX.ScmContentChip & JSXBase.HTMLAttributes<HTMLScmContentChipElement>;

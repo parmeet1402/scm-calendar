@@ -118,7 +118,7 @@ export class MyComponent {
       //   // querySelectorAll select all slots inside a wrapper
       //   // from that we could
 
-      //   return {
+      //   return { 
       //     html: `<slot name="event"/>`,
       //   };
       // },
