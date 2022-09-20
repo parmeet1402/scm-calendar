@@ -3,6 +3,7 @@ import { Calendar, EventSourceInput, Identity } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
 
 type Events = any[];
 
@@ -23,7 +24,8 @@ export class CalendarWrapper {
     this.calendar = new Calendar(this.calendarContainerEl as HTMLDivElement, {
       initialView: 'dayGridMonth',
       initialDate: '2022-09-12',
-      plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+      droppable: true,
+      plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
       events: this.events,
       ...(this.eventContent !== null && { eventContent: this.eventContent }),
       // eventDidMount: this.eventDidMount,
@@ -54,6 +56,11 @@ export class CalendarWrapper {
   @Method()
   async updateEvents(events: any) {
     this.events = events;
+  }
+
+  @Method()
+  async returnCalendar() {
+    return this.calendar;
   }
 
   render() {

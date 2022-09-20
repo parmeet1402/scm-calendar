@@ -5,6 +5,7 @@ import { Component, Host, h, State, Watch } from '@stencil/core';
   shadow: true,
 })
 export class RootComponent {
+  @State() passCalendarDown;
   calendarWrapperEl!: any;
   @State() inputVal: string = '';
 
@@ -22,7 +23,7 @@ export class RootComponent {
       this.events,
       (args, createElement) => {
         // console.log({ el: this.calendarWrapperEl });
-        console.log({ args });
+        // console.log({ args });
         // const element = this.calendarWrapperEl
         // return {
         //   html: `<scm-content-chip><span slot="time">09:00 AM</span><span slot="text">THis is somethingdkljdklfjkdjfkldjkfld djsafjadk dasfkjdsakfkldsajfkld alkdjfjkl jdfkljd</span></scm-content-chip>`,
@@ -38,9 +39,12 @@ export class RootComponent {
         );
       },
       all => {
-        console.log({ all });
+        // console.log({ all });
       },
     );
+
+    // console.log(this.calendarWrapperEl.returnCalendar())
+    this.calendarWrapperEl.returnCalendar().then(val => (this.passCalendarDown = val));
   }
 
   // pass down events easily
@@ -51,6 +55,15 @@ export class RootComponent {
     this.calendarWrapperEl.updateEvents(this.events);
   }
 
+  @Watch('passCalendarDown')
+  LoadDraggable(x) {
+    // console.log(x);
+    // new Draggable(this.draggableWrapperEl);
+  }
+
+
+
+
   addEvent(event) {
     this.events = [...this.events, event];
   }
@@ -59,6 +72,8 @@ export class RootComponent {
     return (
       <Host>
         <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />
+
+        <draggable-wrapper calendar={this.passCalendarDown} />
 
         <scm-content-chip>
           <span slot="time">09:00 AM</span>

@@ -50,8 +50,8 @@ export class MyComponent {
   // @Element() private element: HTMLElement;
 
   componentDidLoad() {
-    console.log({ calendarContainerEl: this.calendarContainerEl }); // outputs HTMLElement <my-component ...
-    console.log({ container: this.slotContainerEl, slot: this.slotEl });
+    // console.log({ calendarContainerEl: this.calendarContainerEl }); // outputs HTMLElement <my-component ...
+    // console.log({ container: this.slotContainerEl, slot: this.slotEl });
 
     let nodes = null;
     if (this.calendarContainerEl.shadowRoot !== null) {
@@ -59,7 +59,7 @@ export class MyComponent {
     }
 
     // TODO: find all the chips which are present inside the wrapper component
-    console.log({ nodes, events: this.events });
+    // console.log({ nodes, events: this.events });
     // TODO: Once we find the chips, then
 
     this.calendar = new Calendar(this.calendarContainerEl as HTMLDivElement, {
