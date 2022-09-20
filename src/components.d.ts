@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface CalendarWrapper {
-        "init": (events: any, cb: any) => Promise<void>;
+        "init": (events: any, cb: any, eventDidMountCallback: any) => Promise<void>;
         "updateEvents": (events: any) => Promise<void>;
     }
     interface MyComponent {
@@ -17,8 +17,6 @@ export namespace Components {
     interface RootComponent {
     }
     interface ScmContentChip {
-        "dateTime": string;
-        "type": string;
     }
 }
 declare global {
@@ -62,8 +60,6 @@ declare namespace LocalJSX {
     interface RootComponent {
     }
     interface ScmContentChip {
-        "dateTime"?: string;
-        "type"?: string;
     }
     interface IntrinsicElements {
         "calendar-wrapper": CalendarWrapper;

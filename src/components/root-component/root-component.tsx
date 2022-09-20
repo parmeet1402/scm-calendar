@@ -18,12 +18,33 @@ export class RootComponent {
   ];
 
   componentDidLoad() {
-    this.calendarWrapperEl.init(this.events, args => {
-      return {
-        html: `<b>${args.event._def.title.slice(0, 2)}</b>`,
-      };
-    });
+    this.calendarWrapperEl.init(
+      this.events,
+      (args, createElement) => {
+        // console.log({ el: this.calendarWrapperEl });
+        console.log({ args });
+        // const element = this.calendarWrapperEl
+        // return {
+        //   html: `<scm-content-chip><span slot="time">09:00 AM</span><span slot="text">THis is somethingdkljdklfjkdjfkldjkfld djsafjadk dasfkjdsakfkldsajfkld alkdjfjkl jdfkljd</span></scm-content-chip>`,
+        // };
+        return createElement(
+          'scm-content-chip',
+          {
+            onClick: () => {
+              alert('thhf');
+            },
+          },
+          createElement('i', {}, 'OKAY!'),
+        );
+      },
+      all => {
+        console.log({ all });
+      },
+    );
   }
+
+  // pass down events easily
+  // listen to different events like onClick, onDoubleClick
 
   @Watch('events')
   handleEventsChange() {
@@ -38,13 +59,18 @@ export class RootComponent {
     return (
       <Host>
         <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />
-        
-        
-        
-        
-        
-        
-        
+
+        <scm-content-chip>
+          <span slot="time">09:00 AM</span>
+          <div slot="img">
+            <img src="" alt="some image...." />
+          </div>
+          <div slot="action-buttons">
+            <scm-action-button>+</scm-action-button>
+            <scm-action-button>-</scm-action-button>
+          </div>
+        </scm-content-chip>
+
         <form
           onSubmit={e => {
             e.preventDefault();
