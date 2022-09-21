@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Watch } from '@stencil/core';
+import { Component, h, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'root-component',
@@ -6,89 +6,90 @@ import { Component, Host, h, State, Watch } from '@stencil/core';
 })
 export class RootComponent {
   calendarWrapperEl!: any;
-  @State() inputVal: string = '';
-
-  // events can be added or removed in this component
   @State() events: any[] = [
     {
-      title: 'sdfdfdfdfd',
+      title: 'Fist',
       id: 'first-id',
-      start: '2022-09-15',
+      start: '2022-09-05',
+      // optional attributes goes here
+      time: '09:00 AM',
+      description: 'THis is some description which is present...',
+      images: ['https://media-exp1.licdn.com/dms/image/C560BAQFqCEBmVvvSeA/company-logo_200_200/0/1656696462520?e=2147483647&v=beta&t=CnYx4B5I2APMnVqUu5MIEVWSU0jhf8DV9zpa2riOWTU'],
+    },
+    {
+      title: 'Second',
+      id: 'second-id',
+      start: '2022-09-25',
+      // optional attributes goes here
+      time: '01:00 AM',
+      description: 'THis is some description which is present...',
+      images: ['https://media-exp1.licdn.com/dms/image/C560BAQFqCEBmVvvSeA/company-logo_200_200/0/1656696462520?e=2147483647&v=beta&t=CnYx4B5I2APMnVqUu5MIEVWSU0jhf8DV9zpa2riOWTU'],
     },
   ];
 
+  // INFO: inital date and intial view can't be ovverridden using the object
   componentDidLoad() {
     this.calendarWrapperEl.init(
       this.events,
       (args, createElement) => {
-        // console.log({ el: this.calendarWrapperEl });
-        console.log({ args });
-        // const element = this.calendarWrapperEl
-        // return {
-        //   html: `<scm-content-chip><span slot="time">09:00 AM</span><span slot="text">THis is somethingdkljdklfjkdjfkldjkfld djsafjadk dasfkjdsakfkldsajfkld alkdjfjkl jdfkljd</span></scm-content-chip>`,
-        // };
-        return createElement(
-          'scm-content-chip',
-          {
-            onClick: () => {
-              alert('thhf');
-            },
+        return createElement('vue-content-chip', {
+          onClick: () => {
+            alert(`You clicked the event, ${args.event._def.extendedProps.time}`);
           },
-          createElement('i', {}, 'OKAY!'),
-        );
+          data: args.event._def.extendedProps,
+        });
       },
-      all => {
-        console.log({ all });
+      {
+        headerToolbar: {
+          left: 'prev today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,listWeek',
+        },
       },
     );
   }
-
-  // pass down events easily
-  // listen to different events like onClick, onDoubleClick
 
   @Watch('events')
   handleEventsChange() {
     this.calendarWrapperEl.updateEvents(this.events);
   }
 
-  addEvent(event) {
-    this.events = [...this.events, event];
-  }
-
   render() {
-    return (
-      <Host>
-        <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />
-
-        <scm-content-chip>
-          <span slot="time">09:00 AM</span>
-          <div slot="img">
-            <img src="" alt="some image...." />
-          </div>
-          <div slot="action-buttons">
-            <scm-action-button>+</scm-action-button>
-            <scm-action-button>-</scm-action-button>
-          </div>
-        </scm-content-chip>
-
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            const event = { title: this.inputVal, id: `${this.inputVal}-id`, start: '2022-09-10' };
-            this.addEvent(event);
-            this.inputVal = '';
-          }}
-        >
-          <input
-            type="text"
-            value={this.inputVal}
-            onChange={(e: Event) => {
-              this.inputVal = (e.target as HTMLInputElement).value;
-            }}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </Host>
-    );
+    return <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />;
   }
 }
+
+/* 
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+// addEvent(event) {
+//   this.events = [...this.events, event];
+// }
+// {/*  <form
+//   onSubmit={e => {
+//     e.preventDefault();
+//     const event = { title: this.inputVal, id: `${this.inputVal}-id`, start: '2022-09-10' };
+//     this.addEvent(event);
+//     this.inputVal = '';
+//   }}
+// >
+//   <input
+//     type="text"
+//     value={this.inputVal}
+//     onChange={(e: Event) => {
+//       this.inputVal = (e.target as HTMLInputElement).value;
+//     }}
+//   />
+//   <button type="submit">Submit</button>
+// </form> */}

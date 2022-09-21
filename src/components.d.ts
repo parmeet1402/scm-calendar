@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface CalendarWrapper {
-        "init": (events: any, cb: any, eventDidMountCallback: any) => Promise<void>;
+        "init": (events: any, cb: any, optionsOverride: any) => Promise<void>;
         "updateEvents": (events: any) => Promise<void>;
     }
     interface MyComponent {
@@ -17,6 +17,9 @@ export namespace Components {
     interface RootComponent {
     }
     interface ScmContentChip {
+    }
+    interface VueContentChip {
+        "data": any;
     }
 }
 declare global {
@@ -44,11 +47,18 @@ declare global {
         prototype: HTMLScmContentChipElement;
         new (): HTMLScmContentChipElement;
     };
+    interface HTMLVueContentChipElement extends Components.VueContentChip, HTMLStencilElement {
+    }
+    var HTMLVueContentChipElement: {
+        prototype: HTMLVueContentChipElement;
+        new (): HTMLVueContentChipElement;
+    };
     interface HTMLElementTagNameMap {
         "calendar-wrapper": HTMLCalendarWrapperElement;
         "my-component": HTMLMyComponentElement;
         "root-component": HTMLRootComponentElement;
         "scm-content-chip": HTMLScmContentChipElement;
+        "vue-content-chip": HTMLVueContentChipElement;
     }
 }
 declare namespace LocalJSX {
@@ -61,11 +71,15 @@ declare namespace LocalJSX {
     }
     interface ScmContentChip {
     }
+    interface VueContentChip {
+        "data"?: any;
+    }
     interface IntrinsicElements {
         "calendar-wrapper": CalendarWrapper;
         "my-component": MyComponent;
         "root-component": RootComponent;
         "scm-content-chip": ScmContentChip;
+        "vue-content-chip": VueContentChip;
     }
 }
 export { LocalJSX as JSX };
@@ -76,6 +90,7 @@ declare module "@stencil/core" {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "root-component": LocalJSX.RootComponent & JSXBase.HTMLAttributes<HTMLRootComponentElement>;
             "scm-content-chip": LocalJSX.ScmContentChip & JSXBase.HTMLAttributes<HTMLScmContentChipElement>;
+            "vue-content-chip": LocalJSX.VueContentChip & JSXBase.HTMLAttributes<HTMLVueContentChipElement>;
         }
     }
 }

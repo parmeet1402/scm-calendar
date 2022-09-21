@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Watch } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
 @Component({
   tag: 'scm-content-chip',
@@ -6,21 +6,19 @@ import { Component, Host, h, Prop, Watch } from '@stencil/core';
   shadow: true,
 })
 export class ScmContentChip {
-  // eventId should be accepted as prop
-  // data should be passed
-
   render() {
     return (
-      <div>
-        <b style={{ fontSize: '12px', color: 'green' }}>
-          <span>
-            time: <slot name="time" />
-          </span>
-          <span>
-            text: <slot name="text" />
-          </span>
-          <slot></slot>
-        </b>
+      <div style={{ backgroundColor: 'cyan', width: '22px' }}>
+        <div class="scm-content-chip__header">
+          <div class="scm-content-chip__header__time">
+            <slot name="time" />
+          </div>
+        </div>
+        <div class="scm-content-chip__content">
+          <div class="scm-content-chip__content__description">
+            <slot name="description" />
+          </div>
+        </div>
       </div>
     );
   }
