@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Watch } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
 @Component({
   tag: 'scm-content-chip',
@@ -12,12 +12,13 @@ export class ScmContentChip {
   render() {
     return (
       <div>
-        <b style={{ fontSize: '12px', color: 'green' }}>
-          <span>
-            time: <slot name="time" />
+        <b style={{ fontSize: '16px', color: 'green' }}>
+          {/* <span>
+            time:<slot name="time" />
           </span>
+          &nbsp; */}
           <span>
-            text: <slot name="text" />
+            <slot name="text" />
           </span>
           <slot></slot>
         </b>

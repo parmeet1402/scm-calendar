@@ -5,14 +5,13 @@ import { Component, Host, h, State, Watch } from '@stencil/core';
   shadow: true,
 })
 export class RootComponent {
-  @State() passCalendarDown;
   calendarWrapperEl!: any;
   @State() inputVal: string = '';
 
   // events can be added or removed in this component
   @State() events: any[] = [
     {
-      title: 'sdfdfdfdfd',
+      title: 'an event',
       id: 'first-id',
       start: '2022-09-15',
     },
@@ -28,6 +27,7 @@ export class RootComponent {
         // return {
         //   html: `<scm-content-chip><span slot="time">09:00 AM</span><span slot="text">THis is somethingdkljdklfjkdjfkldjkfld djsafjadk dasfkjdsakfkldsajfkld alkdjfjkl jdfkljd</span></scm-content-chip>`,
         // };
+
         return createElement(
           'scm-content-chip',
           {
@@ -35,16 +35,13 @@ export class RootComponent {
               alert('thhf');
             },
           },
-          createElement('i', {}, 'OKAY!'),
+          createElement('i', {}, args.event._def.title),
         );
       },
       all => {
-        // console.log({ all });
+        console.log({ all });
       },
     );
-
-    // console.log(this.calendarWrapperEl.returnCalendar())
-    this.calendarWrapperEl.returnCalendar().then(val => (this.passCalendarDown = val));
   }
 
   // pass down events easily
@@ -55,15 +52,6 @@ export class RootComponent {
     this.calendarWrapperEl.updateEvents(this.events);
   }
 
-  @Watch('passCalendarDown')
-  LoadDraggable(x) {
-    // console.log(x);
-    // new Draggable(this.draggableWrapperEl);
-  }
-
-
-
-
   addEvent(event) {
     this.events = [...this.events, event];
   }
@@ -71,11 +59,39 @@ export class RootComponent {
   render() {
     return (
       <Host>
+        <draggable-wrapper>
+          <div>
+            <scm-content-chip>
+              <span slot="text">Event 143</span>
+            </scm-content-chip>
+          </div>
+        </draggable-wrapper>
+
         <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />
 
-        <draggable-wrapper calendar={this.passCalendarDown} />
+        <draggable-wrapper>
+          <div>
+            <scm-content-chip>
+              <span slot="text">Event 1</span>
+            </scm-content-chip>
+          </div>
+        </draggable-wrapper>
 
-        <scm-content-chip>
+        <draggable-wrapper>
+          <div>
+            <scm-content-chip>
+              <span slot="text">Event 2</span>
+            </scm-content-chip>
+          </div>
+        </draggable-wrapper>
+
+        <draggable-wrapper>
+          <scm-content-chip>
+            <span slot="text">Event 3</span>
+          </scm-content-chip>
+        </draggable-wrapper>
+
+        {/* <scm-content-chip>
           <span slot="time">09:00 AM</span>
           <div slot="img">
             <img src="" alt="some image...." />
@@ -84,7 +100,7 @@ export class RootComponent {
             <scm-action-button>+</scm-action-button>
             <scm-action-button>-</scm-action-button>
           </div>
-        </scm-content-chip>
+        </scm-content-chip> */}
 
         <form
           onSubmit={e => {

@@ -1,5 +1,5 @@
 import { Component, h, Method, State, Watch } from '@stencil/core';
-import { Calendar, EventSourceInput, Identity } from '@fullcalendar/core';
+import { Calendar} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
@@ -25,6 +25,7 @@ export class CalendarWrapper {
       initialView: 'dayGridMonth',
       initialDate: '2022-09-12',
       droppable: true,
+      drop: this.drop,
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
       events: this.events,
       ...(this.eventContent !== null && { eventContent: this.eventContent }),
@@ -58,10 +59,20 @@ export class CalendarWrapper {
     this.events = events;
   }
 
-  @Method()
-  async returnCalendar() {
-    return this.calendar;
-  }
+  drop = evt => {
+
+    // console.log(evt)
+
+    
+    let newEvent = {
+      start: evt.dateStr,
+      title: evt.draggedEl.textContent,
+    };
+
+    this.updateEvents([...this.events, newEvent]);
+  };
+
+  // this.store.commit
 
   render() {
     return (

@@ -8,11 +8,9 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface CalendarWrapper {
         "init": (events: any, cb: any, eventDidMountCallback: any) => Promise<void>;
-        "returnCalendar": () => Promise<any>;
         "updateEvents": (events: any) => Promise<void>;
     }
     interface DraggableWrapper {
-        "calendar": any;
     }
     interface MyComponent {
         "addEvent": (event: any) => Promise<void>;
@@ -66,7 +64,6 @@ declare namespace LocalJSX {
     interface CalendarWrapper {
     }
     interface DraggableWrapper {
-        "calendar"?: any;
     }
     interface MyComponent {
         "events"?: any[];

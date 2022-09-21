@@ -1,4 +1,4 @@
-import { Component, Prop, h, Element, State, Method } from '@stencil/core';
+import { Component, Prop, h, Method } from '@stencil/core';
 
 // import { format } from '../../utils/utils';
 // ----
@@ -28,9 +28,9 @@ import dayjs from 'dayjs';
 
 // calendar.render();
 
-function hasSlot(element: HTMLElement, slotName: string): boolean {
-  return element.querySelector<HTMLSlotElement>(`[slot="${slotName}"]`) !== null;
-}
+// function hasSlot(element: HTMLElement, slotName: string): boolean {
+//   return element.querySelector<HTMLSlotElement>(`[slot="${slotName}"]`) !== null;
+// }
 
 @Component({
   tag: 'my-component',
@@ -53,10 +53,10 @@ export class MyComponent {
     // console.log({ calendarContainerEl: this.calendarContainerEl }); // outputs HTMLElement <my-component ...
     // console.log({ container: this.slotContainerEl, slot: this.slotEl });
 
-    let nodes = null;
-    if (this.calendarContainerEl.shadowRoot !== null) {
-      nodes = this.calendarContainerEl?.shadowRoot.querySelectorAll('h1');
-    }
+    // let nodes = null;
+    // if (this.calendarContainerEl.shadowRoot !== null) {
+    //   nodes = this.calendarContainerEl?.shadowRoot.querySelectorAll('h1');
+    // }
 
     // TODO: find all the chips which are present inside the wrapper component
     // console.log({ nodes, events: this.events });
@@ -77,7 +77,7 @@ export class MyComponent {
         };
       },
       events: this.events,
-      eventContent: args => {
+      eventContent: () => {
         return {
           html: `<span/>`,
         };
