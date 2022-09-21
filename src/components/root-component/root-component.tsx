@@ -49,13 +49,31 @@ export class RootComponent {
     );
   }
 
+  // defaultView:
+  // defaultDate:
+
+  // this.calendarWrapperEl.setOverrideOptions({
+  //   // ...config
+
+  // })
+
   @Watch('events')
   handleEventsChange() {
+    // optionalProp
     this.calendarWrapperEl.updateEvents(this.events);
   }
 
   render() {
-    return <calendar-wrapper ref={el => (this.calendarWrapperEl = el)} />;
+    return (
+      <calendar-wrapper
+        ref={el => (this.calendarWrapperEl = el)}
+        handleDrop={data => {
+          // whenever a drop is done, give me the event
+          // if the event's data right now is save to draft then we would call updateStatus API
+          // if the event's data right now is scheduled then we would call updateDateTime API
+        }}
+      />
+    );
   }
 }
 

@@ -1,8 +1,9 @@
-import { Component, h, Method, State, Watch } from '@stencil/core';
+import { Component, h, Method, State, Watch, Prop } from '@stencil/core';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import state from '../../state/store';
 
 type Events = any[];
 
@@ -10,6 +11,7 @@ const DEFAULT_OPTIONS = {
   initialView: 'dayGridMonth',
   initialDate: '2022-09-12',
   plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+  // meltwater theme
 };
 
 @Component({
@@ -20,36 +22,53 @@ const DEFAULT_OPTIONS = {
 export class CalendarWrapper {
   calendarContainerEl!: HTMLDivElement;
   eventContent = null;
-  calendar = null;
+  // calendar = null;
+
+  @Prop() handleDrop = (data) => { data.event.innerHtml};
 
   @State() events: Events = [];
   @State() optionsAccumulator = {};
   @State() optionsOverride = {};
 
+  // current events which are gonna be dropped into a date and time
+  //
+
   componentDidLoad() {
     this.optionsAccumulator = {
       ...DEFAULT_OPTIONS,
       events: this.events,
+      drop: (event)=>{
+        // event.element
+        // TODO: get the data for the event
+        // select the element
+        // then we call getData on the element
+        
+        // TODO: push the added event object 
+        // optional thing:
+        // this.events = [...this.events, event]
+        this.handleDrop(event);
+      },
       ...(this.eventContent !== null && { eventContent: this.eventContent }),
       ...this.optionsOverride,
     };
-    console.log('options in componentdidload', this.optionsAccumulator);
-    this.calendar = new Calendar(this.calendarContainerEl as HTMLDivElement, this.optionsAccumulator);
-    this.calendar.render();
+    state.calendarInstance = new Calendar(this.calendarContainerEl as HTMLDivElement, DEFAULT_OPTIONS);
+    state.calendarInstance.render();
   }
 
   @Watch('events')
   handleEventsChange() {
-    this.calendar.setOption('events', this.events);
-    this.calendar.setOption('eventContent', this.eventContent);
+    state.calendarInstance.setOption('events', this.events);
+    state.calendarInstance.setOption('eventContent', this.eventContent);
   }
 
   @Watch('optionsOverride')
-  handleOptionChange(newVal) {
-    this.optionsAccumulator = { ...this.optionsAccumulator, ...newVal };
-    this.calendar.resetOptions(this.optionsAccumulator);
-    this.calendar.render();
+  handleOptionChange(newOptionsOverride) {
+    this.optionsAccumulator = { ...this.optionsAccumulator, ...newOptionsOverride };
+    state.calendarInstance.resetOptions(this.optionsAccumulator);
+    state.calendarInstance.render();
   }
+
+  // TODO: Method to updateOptions
 
   // Public Method for calling the populating and render method
   @Method()
@@ -67,6 +86,9 @@ export class CalendarWrapper {
   async updateEvents(events: any) {
     this.events = events;
   }
+
+  // @Method()
+  // async
 
   render() {
     return (

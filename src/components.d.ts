@@ -7,8 +7,13 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface CalendarWrapper {
+        "handleDrop": (data: any) => void;
         "init": (events: any, cb: any, optionsOverride: any) => Promise<void>;
         "updateEvents": (events: any) => Promise<void>;
+    }
+    interface DraggableWrapper {
+        "data"?: any;
+        "getData": () => Promise<any>;
     }
     interface MyComponent {
         "addEvent": (event: any) => Promise<void>;
@@ -28,6 +33,12 @@ declare global {
     var HTMLCalendarWrapperElement: {
         prototype: HTMLCalendarWrapperElement;
         new (): HTMLCalendarWrapperElement;
+    };
+    interface HTMLDraggableWrapperElement extends Components.DraggableWrapper, HTMLStencilElement {
+    }
+    var HTMLDraggableWrapperElement: {
+        prototype: HTMLDraggableWrapperElement;
+        new (): HTMLDraggableWrapperElement;
     };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
@@ -55,6 +66,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "calendar-wrapper": HTMLCalendarWrapperElement;
+        "draggable-wrapper": HTMLDraggableWrapperElement;
         "my-component": HTMLMyComponentElement;
         "root-component": HTMLRootComponentElement;
         "scm-content-chip": HTMLScmContentChipElement;
@@ -63,6 +75,10 @@ declare global {
 }
 declare namespace LocalJSX {
     interface CalendarWrapper {
+        "handleDrop"?: (data: any) => void;
+    }
+    interface DraggableWrapper {
+        "data"?: any;
     }
     interface MyComponent {
         "events"?: any[];
@@ -76,6 +92,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "calendar-wrapper": CalendarWrapper;
+        "draggable-wrapper": DraggableWrapper;
         "my-component": MyComponent;
         "root-component": RootComponent;
         "scm-content-chip": ScmContentChip;
@@ -87,6 +104,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "calendar-wrapper": LocalJSX.CalendarWrapper & JSXBase.HTMLAttributes<HTMLCalendarWrapperElement>;
+            "draggable-wrapper": LocalJSX.DraggableWrapper & JSXBase.HTMLAttributes<HTMLDraggableWrapperElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "root-component": LocalJSX.RootComponent & JSXBase.HTMLAttributes<HTMLRootComponentElement>;
             "scm-content-chip": LocalJSX.ScmContentChip & JSXBase.HTMLAttributes<HTMLScmContentChipElement>;
