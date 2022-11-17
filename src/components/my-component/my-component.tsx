@@ -1,4 +1,4 @@
-import { Component, Prop, h, Element, State, Method } from '@stencil/core';
+import { Component, Prop, h, Method } from '@stencil/core';
 
 // import { format } from '../../utils/utils';
 // ----
@@ -28,9 +28,6 @@ import dayjs from 'dayjs';
 
 // calendar.render();
 
-function hasSlot(element: HTMLElement, slotName: string): boolean {
-  return element.querySelector<HTMLSlotElement>(`[slot="${slotName}"]`) !== null;
-}
 
 @Component({
   tag: 'my-component',
@@ -77,7 +74,7 @@ export class MyComponent {
         };
       },
       events: this.events,
-      eventContent: args => {
+      eventContent: () => {
         return {
           html: `<span/>`,
         };
@@ -118,7 +115,7 @@ export class MyComponent {
       //   // querySelectorAll select all slots inside a wrapper
       //   // from that we could
 
-      //   return { 
+      //   return {
       //     html: `<slot name="event"/>`,
       //   };
       // },

@@ -22,7 +22,7 @@ export class DraggableWrapper {
 
   componentDidLoad() {
     new Draggable(this.draggableWrapperEl, {
-      eventData: function (eventEl) {
+      eventData: function () {
         // console.log(eventEl);
         return {
           // calendarEl
@@ -65,5 +65,4 @@ export class DraggableWrapper {
         async getData(){
           return this.data;
         }
-
 */

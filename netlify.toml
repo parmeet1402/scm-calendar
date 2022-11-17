@@ -1,0 +1,11 @@
+[context.production]
+  command = "./netlify-npmrc.sh && npm run build"
+[context.branch-deploy]
+  command = "./netlify-npmrc.sh && npm run build"
+[context.deploy-preview]
+  command = "./netlify-npmrc.sh && npm run build"
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"

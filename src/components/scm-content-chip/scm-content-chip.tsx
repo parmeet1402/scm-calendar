@@ -18,6 +18,7 @@ export class ScmContentChip {
           <div class="scm-content-chip__content__description">
             <slot name="description" />
           </div>
+          {/* <flux-icon name="features:analyze"></flux-icon> */}
         </div>
       </div>
     );

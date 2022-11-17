@@ -27,47 +27,28 @@ export class RootComponent {
     },
   ];
 
-  // INFO: inital date and intial view can't be ovverridden using the object
   componentDidLoad() {
-    this.calendarWrapperEl.init(
-      this.events,
-      (args, createElement) => {
-        return createElement('vue-content-chip', {
-          onClick: () => {
-            alert(`You clicked the event, ${args.event._def.extendedProps.time}`);
-          },
-          data: args.event._def.extendedProps,
-        });
-      },
-      {
-        headerToolbar: {
-          left: 'prev today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,listWeek',
+    this.calendarWrapperEl.updateEvents(this.events, (args, createElement) => {
+      return createElement('vue-content-chip', {
+        onClick: () => {
+          alert(`You clicked the event, ${args.event._def.extendedProps.time}`);
         },
-      },
-    );
+        data: args.event._def.extendedProps,
+      });
+    });
   }
-
-  // defaultView:
-  // defaultDate:
-
-  // this.calendarWrapperEl.setOverrideOptions({
-  //   // ...config
-
-  // })
 
   @Watch('events')
   handleEventsChange() {
-    // optionalProp
     this.calendarWrapperEl.updateEvents(this.events);
   }
 
   render() {
+    console.log({ events: this.events });
     return (
       <calendar-wrapper
         ref={el => (this.calendarWrapperEl = el)}
-        handleDrop={data => {
+        handleDrop={() => {
           // whenever a drop is done, give me the event
           // if the event's data right now is save to draft then we would call updateStatus API
           // if the event's data right now is scheduled then we would call updateDateTime API

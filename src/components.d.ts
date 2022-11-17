@@ -8,8 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface CalendarWrapper {
         "handleDrop": (data: any) => void;
-        "init": (events: any, cb: any, optionsOverride: any) => Promise<void>;
-        "updateEvents": (events: any) => Promise<void>;
+        "updateConfig": (optionsOverride: any) => Promise<void>;
+        "updateEvents": (events: any, renderCallback?: any) => Promise<void>;
     }
     interface DraggableWrapper {
         "data"?: any;
