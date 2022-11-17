@@ -1,9 +1,9 @@
 [context.production]
-  command = "npm run build"
+  command = "npm run build && npm run build-storybook"
 [context.branch-deploy]
-  command = "npm run build"
+  command = "npm run build && npm run build-storybook"
 [context.deploy-preview]
-  command = "npm run build"
+  command = "npm run build && npm run build-storybook"
 
 [[headers]]
   for = "/*"

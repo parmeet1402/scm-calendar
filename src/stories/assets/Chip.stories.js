@@ -3,6 +3,6 @@ export default {
   argTypes: {},
 };
 
-const Chip = () => {
-  return <span>dfd</span>;
+export const Chip = () => {
+  return '<span>dfd</span>';
 };
